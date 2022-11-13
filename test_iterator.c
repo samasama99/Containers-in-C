@@ -1,5 +1,5 @@
-#include "linked_list.c"
-#include "vector.c"
+// #include "linked_list.c"
+// #include "vector.c"
 
 typedef void(for_each_func)(void*);
 
@@ -26,6 +26,15 @@ void for_each(iterator begin, iterator end, for_each_func f) {
     }
 };
 
+// size_t container_size(iterator begin, iterator end) {
+//     size_t t = 0;
+//     for (;begin.current != end.current;++t){
+//         next(&begin);
+//     }
+//     return t;
+// }
+
+VECTOR_TYPE(int);
 int main() {
     puts("list iterator test");
     {

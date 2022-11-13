@@ -1,8 +1,7 @@
 typedef struct iterator iterator;
 
-typedef int iterType;
 typedef void (next_func)(iterator*);
-typedef iterType* (get_func)(iterator*);
+typedef void* (get_func)(iterator*);
 typedef iterator (begin_func)(void* current);
 typedef iterator (end_func)(void* current);
 
@@ -21,7 +20,7 @@ void next(iterator* iter) {
     iter->next(iter);
 }
 
-iterType* get_value(iterator* iter) {
+void* get_value(iterator* iter) {
     return iter->get(iter);
 }
 
