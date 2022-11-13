@@ -93,45 +93,51 @@
 
 #define Pop(Type, Name) pop_back_##Type(&Name)
 
-IMPORT_VECTOR_TYPE(int);
-IMPORT_VECTOR_TYPE(float);
 
-int main() {
-    {
-        vector(int) vec = Vector(int, 10);
-        // Create_vector(int, vec, 10);
-        Push_back(int, vec, 1);
-        Push_back(int, vec, 2);
-        Push_back(int, vec, 3);
-        Push_back(int, vec, 4);
-        Push_back(int, vec, 5);
-        Push_back(int, vec, 6);
-        Push_back(int, vec, 7);
-        Push_back(int, vec, 8);
-        Push_back(int, vec, 9);
-        for (size_t i = 0; i < vec.size; ++i) {
-            printf("index %zu value %d\n", i, Get(int, vec, i));
-        }
-        while (vec.size) {
-            printf("value %d\n", Pop(int, vec));
-        }
-    }
-    {
-        Create_vector(float, vec, 10);
-        Push_back(float, vec, 1.5);
-        Push_back(float, vec, 2.5);
-        Push_back(float, vec, 3.5);
-        Push_back(float, vec, 4.5);
-        Push_back(float, vec, 5.5);
-        Push_back(float, vec, 6.5);
-        Push_back(float, vec, 7.5);
-        Push_back(float, vec, 8.5);
-        Push_back(float, vec, 9.5);
-        for (size_t i = 0; i < vec.size; ++i) {
-            printf("index %zu value %f\n", i, Get(float, vec, i));
-        }
-        while (vec.size) {
-            printf("value %f\n", Pop(float, vec));
-        }
-    }
-}
+// typedef char* char_ptr;
+
+// IMPORT_VECTOR_TYPE(int);
+// IMPORT_VECTOR_TYPE(float);
+// IMPORT_VECTOR_TYPE(char_ptr);
+
+
+// int main() {
+//     {
+//         vector(int) vec = Vector(int, 10);
+//         // Create_vector(int, vec, 10);
+//         Push_back(int, vec, 1);
+//         Push_back(int, vec, 2);
+//         Push_back(int, vec, 3);
+//         Push_back(int, vec, 4);
+//         Push_back(int, vec, 5);
+//         Push_back(int, vec, 6);
+//         Push_back(int, vec, 7);
+//         Push_back(int, vec, 8);
+//         Push_back(int, vec, 9);
+//         for (size_t i = 0; i < vec.size; ++i) {
+//             printf("index %zu value %d\n", i, Get(int, vec, i));
+//         }
+//         while (vec.size) {
+//             printf("value %d\n", Pop(int, vec));
+//         }
+//     }
+//     {
+//         vector(char_ptr) vec = Vector(char_ptr, 10);
+//         // Create_vector(float, vec, 10);
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         Push_back(char_ptr, vec, "hello world");
+//         for (size_t i = 0; i < vec.size; ++i) {
+//             printf("index %zu value %s\n", i, Get(char_ptr, vec, i));
+//         }
+//         while (vec.size) {
+//             printf("value %s\n", Pop(char_ptr, vec));
+//         }
+//     }
+// }

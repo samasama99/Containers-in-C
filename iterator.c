@@ -31,3 +31,10 @@ iterator begin(void*cont) {
 iterator end(void*cont) {
     return ((begin_end*)cont)->_end(cont);
 }
+
+#define Get_value(Type, Iter) *(Type*)get_value(&Iter)
+#define Begin(Cont) begin(&Cont)
+#define End(Cont) end(&Cont)
+#define Next(Cont) next(&Cont)
+
+#define For(It, Cont) iterator It; for (It = Begin(Cont);It.current != End(Cont).current;Next(It))

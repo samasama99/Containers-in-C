@@ -1,17 +1,23 @@
-#include <string.h>
-#include <stdio.h>
+#include "vector.c"
 
-#define MAKE_PRINTEACH(TYPE)                         \
-    void printeach_##TYPE(size_t n, TYPE array[n]) { \
-        for (size_t i = 0; i < n; i++) {             \
-            printf("%d\n", array[i]);                \
-        }                                            \
-    }
-
-MAKE_PRINTEACH(int);
+IMPORT_VECTOR_TYPE(int)
 
 int main() {
-    int arr[] = {1, 2, 3};
-    printeach_int(3, arr);
-    return 0;
+    vector(int) my_vec = Vector(int, 10);
+
+    Push_back(int, my_vec, 1);
+    Push_back(int, my_vec, 2);
+    Push_back(int, my_vec, 3);
+    Push_back(int, my_vec, 4);
+    Push_back(int, my_vec, 5);
+    Push_back(int, my_vec, 6);
+
+    // for (iterator it = Begin(my_vec);it.current !=
+    // End(my_vec).current;Next(it)) {
+    //     printf("value : %d\n", Get_value(int, it));
+    // }
+
+    For(it, my_vec) {
+        printf("value : %d\n", Get_value(int, it));
+    }
 }
