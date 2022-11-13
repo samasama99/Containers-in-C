@@ -116,8 +116,8 @@ int main() {
         "                11111111111111111111111111111111111111111"};
 
     stack s = init_stack();
-
     push_to_stack(&s, (int[2]){1, 1});
+
     int valid = 0;
     while (s.size) {
         int* cur = pop_from_stack(&s);

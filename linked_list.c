@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#ifndef ITERATOR
+#define ITERATOR
+#include "iterator.c"
+#endif
 typedef int Type;
 
 typedef struct list_node list_node;
@@ -16,16 +19,41 @@ struct list_node {
 typedef struct list list;
 
 struct list {
+    begin_func* _begin;
+    end_func* _end;
     list_node* head;
     list_node* tail;
     size_t size;
 };
 
+void list_next_func(iterator* iter) {
+    iter->current = ((list_node*)iter->current)->next;
+}
+
+Type* list_get_func(iterator* iter) {
+    return &((list_node*)iter->current)->data;
+}
+
+iterator list_begin(void* current) {
+    return (iterator){
+        ((list*)current)->head,
+        list_next_func,
+        list_get_func,
+    };
+}
+
+iterator list_end(void* current) {
+    (void)current;
+    return (iterator){
+        NULL,
+        list_next_func,
+        list_get_func,
+    };
+}
+
 list init_list() {
     return (list){
-        NULL,
-        NULL,
-        0,
+        list_begin, list_end, NULL, NULL, 0,
     };
 }
 
@@ -70,7 +98,7 @@ void insert_back(list* s, Type data) {
     tmp->next = node;
 }
 
-Type pop_back(list* s) {
+Type pop_last(list* s) {
     assert(s != NULL);
     assert(s->size > 0);
     s->size -= 1;
@@ -95,79 +123,79 @@ Type pop_front(list* s) {
 }
 
 // TESTS
-int main() {
-    {
-        list l = init_list();
-        insert_front(&l, 1);
-        insert_front(&l, 2);
-        insert_front(&l, 3);
-        {
-            list_node* tmp = l.head;
-            while (tmp) {
-                printf("%d ", tmp->data);
-                tmp = tmp->next;
-            }
-            printf("\n");
-        }
-        {
-            list_node* tmp = l.tail;
-            while (tmp) {
-                printf("%d ", tmp->data);
-                tmp = tmp->previous;
-            }
-            printf("\n");
-        }
-        {
-            while (l.size) {
-                printf("%d ", pop_back(&l));
-            }
-            printf("\n");
-        }
-        {
-            insert_front(&l, 1);
-            insert_front(&l, 2);
-            insert_front(&l, 3);
-            while (l.size) {
-                printf("%d ", pop_front(&l));
-            }
-            printf("\n");
-        }
-    }
-    {
-        list l = init_list();
-        insert_back(&l, 1);
-        insert_back(&l, 2);
-        insert_back(&l, 3);
-        {
-            list_node* tmp = l.head;
-            while (tmp) {
-                printf("%d ", tmp->data);
-                tmp = tmp->next;
-            }
-            printf("\n");
-        }
-        {
-            list_node* tmp = l.tail;
-            while (tmp) {
-                printf("%d ", tmp->data);
-                tmp = tmp->previous;
-            }
-            printf("\n");
-        }
-        {
-            while (l.size) {
-                printf("%d ", pop_front(&l));
-            }
-            printf("\n");
-        }
-        {
-            insert_back(&l, 1);
-            insert_back(&l, 2);
-            insert_back(&l, 3);
-            while (l.size) {
-                printf("%d ", pop_back(&l));
-            }
-            printf("\n");
-        }
-    }
-}
+// int main() {
+//     {
+//         list l = init_list();
+//         insert_front(&l, 1);
+//         insert_front(&l, 2);
+//         insert_front(&l, 3);
+//         {
+//             list_node* tmp = l.head;
+//             while (tmp) {
+//                 printf("%d ", tmp->data);
+//                 tmp = tmp->next;
+//             }
+//             printf("\n");
+//         }
+//         {
+//             list_node* tmp = l.tail;
+//             while (tmp) {
+//                 printf("%d ", tmp->data);
+//                 tmp = tmp->previous;
+//             }
+//             printf("\n");
+//         }
+//         {
+//             while (l.size) {
+//                 printf("%d ", pop_back(&l));
+//             }
+//             printf("\n");
+//         }
+//         {
+//             insert_front(&l, 1);
+//             insert_front(&l, 2);
+//             insert_front(&l, 3);
+//             while (l.size) {
+//                 printf("%d ", pop_front(&l));
+//             }
+//             printf("\n");
+//         }
+//     }
+//     {
+//         list l = init_list();
+//         insert_back(&l, 1);
+//         insert_back(&l, 2);
+//         insert_back(&l, 3);
+//         {
+//             list_node* tmp = l.head;
+//             while (tmp) {
+//                 printf("%d ", tmp->data);
+//                 tmp = tmp->next;
+//             }
+//             printf("\n");
+//         }
+//         {
+//             list_node* tmp = l.tail;
+//             while (tmp) {
+//                 printf("%d ", tmp->data);
+//                 tmp = tmp->previous;
+//             }
+//             printf("\n");
+//         }
+//         {
+//             while (l.size) {
+//                 printf("%d ", pop_front(&l));
+//             }
+//             printf("\n");
+//         }
+//         {
+//             insert_back(&l, 1);
+//             insert_back(&l, 2);
+//             insert_back(&l, 3);
+//             while (l.size) {
+//                 printf("%d ", pop_back(&l));
+//             }
+//             printf("\n");
+//         }
+//     }
+// }
