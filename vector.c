@@ -2,21 +2,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #ifndef ITERATOR
 #define ITERATOR
 #include "iterator.c"
 #endif
 
-// typedef int TYPE;\
-// \
-//
-//
+#ifndef CONTAINER_ITERFACE
+#define CONTAINER_ITERFACE
+#include "container_iterface.c"
+#endif
 
-#define IMPORT_VECTOR_TYPE(Type)                                                  \
+#define IMPORT_VECTOR_TYPE(Type)                                           \
+                                                                           \
     typedef struct vector_##Type vector_##Type;                            \
+                                                                           \
+    typedef void(push_back_vector_##Type##_func)(vector_##Type * vec,      \
+                                                 Type value);              \
+                                                                           \
+    typedef void(push_front_vector_##Type##_func)(vector_##Type * vec,     \
+                                                  Type value);             \
+                                                                           \
+    typedef Type(get_vector_##Type##_func)(const vector_##Type* v,         \
+                                           size_t index);                  \
+                                                                           \
+    typedef Type(pop_back_vector_##Type##_func)(vector_##Type * vec);      \
+                                                                           \
+    typedef Type(pop_front_vector_##Type##_func)(vector_##Type * vec);     \
+                                                                           \
     struct vector_##Type {                                                 \
         begin_func* _begin;                                                \
         end_func* _end;                                                    \
+        push_back_vector_##Type##_func* push_back_func;                    \
+        pop_back_vector_##Type##_func* pop_back_func;                      \
+        push_front_vector_##Type##_func* push_front_func;                  \
+        pop_front_vector_##Type##_func* pop_front_func;                    \
+        get_vector_##Type##_func* get_func;                                \
         size_t size;                                                       \
         size_t capacity;                                                   \
         Type* arr;                                                         \
@@ -45,99 +66,67 @@
         };                                                                 \
     }                                                                      \
                                                                            \
-    vector_##Type init_vector_##Type(size_t capacity) {                    \
-        Type* arr = malloc(sizeof(Type) * capacity);                       \
-        assert(arr != NULL);                                               \
-        return (vector_##Type){                                            \
-            vector_begin_##Type, vector_end_##Type, 0, capacity, arr,      \
-        };                                                                 \
-    }                                                                      \
-                                                                           \
     void realloc_vector_##Type(vector_##Type* vec, size_t new_capacity) {  \
-        vec->capacity = new_capacity;                                      \
         Type* arr = malloc(sizeof(Type) * new_capacity);                   \
-        memcpy(arr, vec->arr, new_capacity);                               \
+        memcpy(arr, vec->arr, vec->capacity);                              \
+        vec->capacity = new_capacity;                                      \
         free(vec->arr);                                                    \
         vec->arr = arr;                                                    \
     }                                                                      \
                                                                            \
-    void push_back_##Type(vector_##Type* vec, Type value) {                \
+    void push_back_vector_##Type(vector_##Type* vec, Type value) {         \
         assert(vec != NULL);                                               \
         if (vec->size == vec->capacity) {                                  \
-            realloc_vector_##Type(vec, vec->capacity * 2);                 \
+            if (vec->capacity == 0)                                        \
+                realloc_vector_##Type(vec, 1);                             \
+            else                                                           \
+                realloc_vector_##Type(vec, vec->capacity * 2);             \
         }                                                                  \
         vec->arr[vec->size++] = value;                                     \
     }                                                                      \
                                                                            \
-    Type pop_back_##Type(vector_##Type* vec) {                             \
+    Type pop_back_vector_##Type(vector_##Type* vec) {                      \
         assert(vec != NULL);                                               \
         return vec->arr[--vec->size];                                      \
     }                                                                      \
                                                                            \
-    Type get_##Type(const vector_##Type* v, size_t index) {                \
+    void push_front_vector_##Type(vector_##Type* vec, Type value) {        \
+        puts("u cant push_front in  vector");                              \
+        assert("u cant push_front in  vector");                            \
+        (void)vec;                                                         \
+        (void)value;                                                       \
+    }                                                                      \
+                                                                           \
+    Type pop_front_vector_##Type(vector_##Type* vec) {                     \
+        puts("u cant pop_front in  vector");                               \
+        assert("u cant pop_front in  vector");                             \
+        (void)vec;                                                         \
+        exit(1);                                                           \
+    }                                                                      \
+                                                                           \
+    Type get_vector_##Type(const vector_##Type* v, size_t index) {         \
         assert(v != NULL);                                                 \
         assert(index < v->size);                                           \
         return v->arr[index];                                              \
+    }                                                                      \
+                                                                           \
+    vector_##Type init_vector_##Type(size_t capacity) {                    \
+        Type* arr = malloc(sizeof(Type) * capacity);                       \
+        assert(arr != NULL);                                               \
+        return (vector_##Type){                                            \
+            vector_begin_##Type,                                           \
+            vector_end_##Type,                                             \
+            push_back_vector_##Type,                                       \
+            pop_back_vector_##Type,                                        \
+            push_front_vector_##Type,                                      \
+            pop_front_vector_##Type,                                       \
+            get_vector_##Type,                                             \
+            0,                                                             \
+            capacity,                                                      \
+            arr,                                                           \
+        };                                                                 \
     }
 
 #define Vector(Type, n) init_vector_##Type(n);
 
 #define vector(Type) vector_##Type
-
-#define Create_vector(Type, Name, Capacity) \
-    vector(Type) Name = Vector(Type, Capacity);
-
-#define Push_back(Type, Name, Value) push_back_##Type(&Name, Value)
-
-#define Get(Type, Name, Value) get_##Type(&Name, Value)
-
-#define Pop(Type, Name) pop_back_##Type(&Name)
-
-
-// typedef char* char_ptr;
-
-// IMPORT_VECTOR_TYPE(int);
-// IMPORT_VECTOR_TYPE(float);
-// IMPORT_VECTOR_TYPE(char_ptr);
-
-
-// int main() {
-//     {
-//         vector(int) vec = Vector(int, 10);
-//         // Create_vector(int, vec, 10);
-//         Push_back(int, vec, 1);
-//         Push_back(int, vec, 2);
-//         Push_back(int, vec, 3);
-//         Push_back(int, vec, 4);
-//         Push_back(int, vec, 5);
-//         Push_back(int, vec, 6);
-//         Push_back(int, vec, 7);
-//         Push_back(int, vec, 8);
-//         Push_back(int, vec, 9);
-//         for (size_t i = 0; i < vec.size; ++i) {
-//             printf("index %zu value %d\n", i, Get(int, vec, i));
-//         }
-//         while (vec.size) {
-//             printf("value %d\n", Pop(int, vec));
-//         }
-//     }
-//     {
-//         vector(char_ptr) vec = Vector(char_ptr, 10);
-//         // Create_vector(float, vec, 10);
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         Push_back(char_ptr, vec, "hello world");
-//         for (size_t i = 0; i < vec.size; ++i) {
-//             printf("index %zu value %s\n", i, Get(char_ptr, vec, i));
-//         }
-//         while (vec.size) {
-//             printf("value %s\n", Pop(char_ptr, vec));
-//         }
-//     }
-// }
