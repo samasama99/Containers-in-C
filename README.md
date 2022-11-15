@@ -52,3 +52,6 @@ All my containers have an easy to use and unified interface
 | Queue       | Yes    | Yes | No          | No       | No         | No        | todo    |
 | List        | No     | No  | Yes         | Yes      | Yes        | Yes       | todo    |
 | Vector      | No     | No  | Yes         | Yes      | Todo       | Todo      | todo    |
+
+## Tests
+run make with no argument to run the provided tests
