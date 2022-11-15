@@ -42,7 +42,7 @@ All my containers have an easy to use and unified interface
 | Stack       | No          |
 | Queue       | No          |
 | List        | Yes         |
-| Vector      | yes         |
+| Vector      | Yes         |
 
 ## Methods
 
