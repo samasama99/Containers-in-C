@@ -11,16 +11,9 @@
 
 ## Methods
 
-| Container   | Push   | Pop |
-| ----------- | -----------  |
-| Stack       | Yes    | Yes |
-| Queue       | Yes    | Yes |
-| List        | No     | No  |
-| Vector      | No     | No  |
-
-| Container   | Push_back   | Pop_back | Push_front | Pop_front |
-| ----------- | ----------  | -------- | ---------  | --------  |
-| Stack       | No          | No       | No         | No        |
-| Queue       | No          | No       | No         | No        |
-| List        | Yes         | Yes      | Yes        | Yes       |
-| Vector      | Yes         | Yes      | Todo       | Todo      |
+| Container   | Push   | Pop | Push_back   | Pop_back | Push_front | Pop_front |
+| ----------- | ------ | --  | ----------  | -------- | ---------  | --------  |
+| Stack       | Yes    | Yes | No          | No       | No         | No        |
+| Queue       | Yes    | Yes | No          | No       | No         | No        |
+| List        | No     | No  | Yes         | Yes      | Yes        | Yes       |
+| Vector      | No     | No  | Yes         | Yes      | Todo       | Todo      |
