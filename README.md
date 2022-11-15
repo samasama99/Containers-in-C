@@ -47,7 +47,7 @@ All my containers have an easy to use and unified interface
 ## Methods
 
 | Container   | Push   | Pop | Push_back   | Pop_back | Push_front | Pop_front | Destroy |
-| ----------- | ------ | --  | ----------  | -------- | ---------  | --------  | todo    |
+| ----------- | ------ | --  | ----------  | -------- | ---------  | --------  | ----    |
 | Stack       | Yes    | Yes | No          | No       | No         | No        | todo    |
 | Queue       | Yes    | Yes | No          | No       | No         | No        | todo    |
 | List        | No     | No  | Yes         | Yes      | Yes        | Yes       | todo    |
