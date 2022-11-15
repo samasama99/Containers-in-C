@@ -36,5 +36,4 @@ iterator end(void*cont) {
 #define Begin(Cont) begin(&Cont)
 #define End(Cont) end(&Cont)
 #define Next(Cont) next(&Cont)
-
 #define For(It, Cont) iterator It; for (It = Begin(Cont);It.current != End(Cont).current;Next(It))

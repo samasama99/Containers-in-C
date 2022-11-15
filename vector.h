@@ -67,11 +67,8 @@
     }                                                                      \
                                                                            \
     void realloc_vector_##Type(vector_##Type* vec, size_t new_capacity) {  \
-        Type* arr = malloc(sizeof(Type) * new_capacity);                   \
-        memcpy(arr, vec->arr, vec->capacity);                              \
+        vec->arr = realloc(vec->arr, sizeof(Type) * new_capacity);        \
         vec->capacity = new_capacity;                                      \
-        free(vec->arr);                                                    \
-        vec->arr = arr;                                                    \
     }                                                                      \
                                                                            \
     void push_back_vector_##Type(vector_##Type* vec, Type value) {         \

@@ -1,5 +1,5 @@
+#include "vector.h"
 #include <stdio.h>
-#include "vector.c"
 
 typedef char* char_ptr;
 
@@ -16,20 +16,20 @@ int main() {
         Push_back(my_vec, 4);
         Push_back(my_vec, 5);
         Push_back(my_vec, 6);
-        Pop_front(my_vec);
 
-        printf("%d\n", Get(my_vec, 0));
-        printf("%d\n", Get(my_vec, 5));
+        assert(Get(my_vec, 0) == 1);
+        assert(Get(my_vec, 5) == 6);
 
+        int i = 0;
         For(it, my_vec) {
-            printf("value : %d\n", Get_value(int, it));
+            assert(Get_value(int, it) == my_vec.arr[i]);
+            i++;
         }
 
         while (my_vec.size) {
-            printf("%d ", Pop_back(my_vec));
+            --i;
+            assert(Pop_back(my_vec) == my_vec.arr[i]);
         }
-
-        printf("\n");
     }
     {
         vector(char_ptr) my_vec = Vector(char_ptr, 10);
@@ -41,22 +41,9 @@ int main() {
         Push_back(my_vec, "hello5");
         Push_back(my_vec, "hello6");
 
-        printf("%s\n", Get(my_vec, 0));
-        printf("%s\n", Get(my_vec, 5));
-
-        For(it, my_vec) {
-            printf("value : %s\n", Get_value(char_ptr, it));
-        }
-
-        while (my_vec.size) {
-            printf("%s ", Pop_back(my_vec));
-        }
-
-        printf("\n");
+        assert(strcmp(Get(my_vec, 0), "hello1") == 0);
+        assert(strcmp(Get(my_vec, 5), "hello6") == 0);
     }
+    puts("all vector tests are passed");
+    return 0;
 }
-
-// // for (iterator it = Begin(my_vec);it.current !=
-// // End(my_vec).current;Next(it)) {
-// //     printf("value : %d\n", Get_value(int, it));
-// // }
