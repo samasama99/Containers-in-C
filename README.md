@@ -9,7 +9,7 @@ Making "c++ containers" in C which means a generic data structure
 ## How to use
 All my containers have an easy to use and unified interface
 
-```
+```c
   // import the right header file
   #include "stack.h"
   // ...
